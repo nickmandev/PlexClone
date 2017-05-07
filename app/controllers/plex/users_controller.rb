@@ -14,9 +14,9 @@ module Plex
       end
       record = User.new(obj)
       if user.test_email(obj[:email])
-      record.save ? (render json: { message: 'Account created' }) : (render json: { message: 'Account creation failed' })
+        record.save ? (render json: {message: 'Account created'}) : (render json: {message: 'Account creation failed'})
       else
-        render json: { message: 'Email is invalid' }
+        render json: {message: 'Email is invalid'}
       end
     end
 
@@ -27,3 +27,4 @@ module Plex
     private :user_params
   end
 end
+
