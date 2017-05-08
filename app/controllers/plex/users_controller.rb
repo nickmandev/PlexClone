@@ -10,13 +10,16 @@ module Plex
       request.body.each do |req|
         hash = JSON.parse(req, :symbolize_names => true)
         obj = hash[:user]
-        obj[:password] = user.hash_password(hash[:password])
       end
       record = User.new(obj)
       if user.test_email(obj[:email])
-        record.save ? (render json: {message: 'Account created'}) : (render json: {message: 'Account creation failed'})
+        if User.find_by(name: obj[:name])
+          render json: { message: 'Account with that Username exists' }
+        else
+          record.save ? (render json: { message: 'Account created' }) : (render json: {message: 'Account creation failed'})
+        end
       else
-        render json: {message: 'Email is invalid'}
+        render json: { message: 'Email is invalid' }
       end
     end
 
