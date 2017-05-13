@@ -14,9 +14,12 @@ class AuthenticateUser
 
   def user
     user = Plex::User.find_by_name(username)
-    return user if user && user.authenticate(password)
+    if user && user.authenticate(password)
+      @current_user = user
+      return user
+    end
 
-    errors.add :user_authentication, 'invalid credentials'
+    errors.add(:user_authenticate, 'Invalid credentials')
     nil
   end
 

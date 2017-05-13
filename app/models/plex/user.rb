@@ -2,6 +2,7 @@ require 'bcrypt'
 module Plex
   class User < ActiveRecord::Base
     has_secure_password
+    has_many :videos
 
     def test_email(email)
       regex = Regexp.new(/\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i)
