@@ -27,8 +27,10 @@ gem 'rack-cors'
 gem 'jwt'
 # Simple Command is easy way of creating services
 gem 'simple_command'
-# File uploader
+#File upload
 gem 'shrine'
+#Worker
+gem 'sidekiq'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
