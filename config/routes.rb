@@ -3,7 +3,8 @@ Rails.application.routes.draw do
     resources :users, :videos
     post 'authenticate', to: 'authentication#authenticate'
 
-    get 'stream', to: 'videos_controller#stream'
+    get 'collection/:name', to: 'videos#user_by_name'
+
   end
 
 end

@@ -1,5 +1,7 @@
 module Plex
   class UsersController < ApplicationController
+    skip_before_action :authenticate_request, only: [:new, :create]
+
     def new
       @user = User.new
     end
