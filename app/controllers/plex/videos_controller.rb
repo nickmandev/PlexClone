@@ -6,7 +6,7 @@ module Plex
     end
 
     def index
-      videos = Video.all
+      videos = Video.all.order('videos.created_at DESC')
       render json: { data: videos }
     end
 
@@ -27,7 +27,7 @@ module Plex
     end
 
     def user_by_name
-      videos = Video.where(user_info: params[:name].to_json)
+      videos = Video.where(user_info: params[:name].to_json).order('videos.created_at DESC')
       render json: { data: videos }
     end
   end
