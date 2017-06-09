@@ -1,7 +1,8 @@
 require 'streamio-ffmpeg'
 module Plex
   class Video < ActiveRecord::Base
-
+    belongs_to :user
+    has_many :comments
     include VideoUploader::Attachment.new(:video)
 
     def upload(params, user, url)
