@@ -9,8 +9,7 @@ module Plex
       video = Video.find_by_id(comments_params['video_id'])
       comment = video.comments.new(comments_params)
       comment['user_info'] = UsersHelpers.current_user.name.to_json
-      comment.save
-      puts comment.errors.full_messages
+      comment.save ? (render json: { comment: comment }) : (render json: { error: 'The comment was not posted.' })
     end
 
     def comments_params

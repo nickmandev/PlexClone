@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170609192934) do
+ActiveRecord::Schema.define(version: 20170610123858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,18 @@ ActiveRecord::Schema.define(version: 20170609192934) do
     t.jsonb "user_info", default: {}
     t.index ["user_info"], name: "index_comments_on_user_info", using: :gin
     t.index ["video_id"], name: "index_comments_on_video_id"
+  end
+
+  create_table "comments_responses", force: :cascade do |t|
+    t.text "body"
+    t.integer "vote_up", default: 0
+    t.integer "vote_down", default: 0
+    t.jsonb "user_info", default: {}
+    t.bigint "comment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_comments_responses_on_comment_id"
+    t.index ["user_info"], name: "index_comments_responses_on_user_info", using: :gin
   end
 
   create_table "users", force: :cascade do |t|
