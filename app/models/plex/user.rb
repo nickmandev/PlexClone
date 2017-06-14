@@ -1,6 +1,7 @@
 require 'bcrypt'
 module Plex
   class User < ActiveRecord::Base
+    include ImageUploader::Attachment.new(:image)
     has_secure_password
     has_many :videos
 
