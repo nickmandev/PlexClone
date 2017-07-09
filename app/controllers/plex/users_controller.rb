@@ -1,6 +1,11 @@
 module Plex
   class UsersController < ApplicationController
     skip_before_action :authenticate_request, only: [:new, :create]
+    
+    def index
+      user = User.find_by_id(UsersHelpers.current_user.id)
+      render json: { user: user }
+    end
 
     def new
       @user = User.new
@@ -23,6 +28,11 @@ module Plex
       else
         render json: { message: 'Email is invalid' }
       end
+    end
+
+    def update_avatar
+      user = User.new
+      user.upload_avatar(params, UsersHelpers.current_user.id)
     end
 
     def user_params

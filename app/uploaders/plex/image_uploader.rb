@@ -1,4 +1,4 @@
-module  Plex
+module Plex
   class ImageUploader < Shrine
 
   end
