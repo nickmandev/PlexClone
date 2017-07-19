@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170614173655) do
+ActiveRecord::Schema.define(version: 20170719195946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20170614173655) do
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.text "image_data"
+    t.text "covers_data"
   end
 
   create_table "videos", force: :cascade do |t|
@@ -56,6 +57,8 @@ ActiveRecord::Schema.define(version: 20170614173655) do
     t.string "user_info"
     t.datetime "created_at"
     t.integer "view_count"
+    t.integer "vote_up", default: 0
+    t.integer "vote_down", default: 0
     t.index ["user_id"], name: "index_videos_on_user_id"
   end
 

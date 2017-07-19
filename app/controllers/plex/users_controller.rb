@@ -13,11 +13,14 @@ module Plex
 
     def create
       user = User.new
+      url = "#{request.protocol + request.host_with_port}"
       obj = {}
       request.body.each do |req|
         hash = JSON.parse(req, :symbolize_names => true)
         obj = hash[:user]
       end
+      obj['image_data'] = "#{url}/uploads/avatar/default-avatar.jpg"
+      obj['covers_data'] = "#{url}/uploads/covers/default-cover.svg"
       record = User.new(obj)
       if user.test_email(obj[:email])
         if User.find_by(name: obj[:name])
