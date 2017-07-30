@@ -7,7 +7,7 @@ module Plex
 
     def upload(params, user, url)
       uploader = VideoUploader.new(:cache)
-      @uploaded_file = uploader.upload(params[:video])
+      @uploaded_file = uploader.upload(params[:file])
       path_to_uploads = Rails.root / 'public' / 'uploads' / 'cache'
       path_to_thumbnail = Rails.root / 'public' / 'thumbnails'
       name = @uploaded_file.id.split('.').first.to_s
@@ -19,37 +19,13 @@ module Plex
       obj['user_info'] = user.name.to_json
       obj['url'] = "#{url}/streams/#{name}"
       obj['thumbnail_url'] = "#{url}/thumbnails/#{name}.png"
+      obj['view_count'] = 0
       if obj.nil?
         render json: {message: 'Upload has failed'}
       end
       @video = user.videos.create(obj)
       @video.save
       convert(file, name)
-    end
-
-    def upload_old(params, user, url)
-      uploader = VideoUploader.new(:cache)
-      @uploaded_file = uploader.upload(params[:video])
-      name = @uploaded_file.id.split('.').first.to_s
-      path_to_uploads = Rails.root / 'public' / 'uploads' / 'cache'
-      path_to_thumbnail = Rails.root / 'public' / 'thumbnails'
-      id = @uploaded_file.id
-      file = "#{path_to_uploads}/#{id}"
-      `ffmpeg -i #{file} -ss 00:00:30.435 -vframes 1 #{path_to_thumbnail}/#{name}.png`
-      obj = {}
-      obj['video_data'] = @uploaded_file.to_json
-      obj['user_info'] = user.name.to_json
-      obj['url'] = "#{url}/streams/#{name}"
-      obj['thumbnail_url'] = "#{url}/thumbnails/#{name}.png"
-      obj['view_count'] = 0
-      puts obj.nil?
-      if obj.nil?
-        render json: {message: 'Upload has failed'}
-      else
-        @video = user.videos.create(obj)
-        @video.save
-        convert(file, name)
-      end
     end
 
     def convert(file, name)

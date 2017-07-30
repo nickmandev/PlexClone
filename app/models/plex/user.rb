@@ -10,10 +10,10 @@ module Plex
       regex.match?(email)
     end
 
-    def upload_avatar(params, user)
+    def upload_avatar(params, user_id)
       uploader = VideoUploader.new(:avatar)
-      avatar = uploader.upload(params[:image])
-      User.find_by_id(user)
+      avatar = uploader.upload(params[:file])
+      User.find_by_id(user_id)
     end
 
     def authenticated?(params)
