@@ -13,7 +13,8 @@ module Plex
     def upload_avatar(params, user_id)
       uploader = VideoUploader.new(:avatar)
       avatar = uploader.upload(params[:file])
-      User.find_by_id(user_id)
+      user = User.find_by_id(user_id)
+      user.update(image_data: avatar.to_json)      
     end
 
     def authenticated?(params)
