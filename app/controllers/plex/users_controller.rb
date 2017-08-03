@@ -19,8 +19,6 @@ module Plex
         hash = JSON.parse(req, :symbolize_names => true)
         obj = hash[:user]
       end
-      obj['image_data'] = "#{url}/uploads/avatar/default-avatar.jpg"
-      obj['covers_data'] = "#{url}/uploads/covers/default-cover.svg"
       record = User.new(obj)
       if user.test_email(obj[:email])
         if User.find_by(name: obj[:name])
@@ -34,8 +32,8 @@ module Plex
     end
 
     def update_avatar
-      user = User.new
-      user.upload_avatar(params, UsersHelpers.current_user.id)
+      image = Image.new
+      image.upload_avatar(params, UsersHelpers.current_user.id)
     end
 
     def user_params

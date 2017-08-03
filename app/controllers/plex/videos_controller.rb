@@ -27,8 +27,9 @@ module Plex
     end
 
     def user_by_name
-      videos = Video.where(user_info: params[:name].to_json).order('videos.created_at DESC')
-      render json: { data: videos }
+      user = User.find_by(name: params[:name])
+      videos = user.videos
+      render json: { videos: videos, user: user  }
     end
   end
 end

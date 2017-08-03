@@ -2,6 +2,8 @@ require 'bcrypt'
 module Plex
   class User < ActiveRecord::Base
     include ImageUploader::Attachment.new(:avatar)
+    include ImageUploader::Attachment.new(:cover)
+
     has_secure_password
     has_many :videos
 
@@ -14,7 +16,7 @@ module Plex
       uploader = VideoUploader.new(:avatar)
       avatar = uploader.upload(params[:file])
       user = User.find_by_id(user_id)
-      user.update(image_data: avatar.to_json)      
+      user.update(image_data: avatar.to_json) 
     end
 
     def authenticated?(params)

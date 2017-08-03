@@ -1,7 +1,10 @@
 module Plex
   class Video < ActiveRecord::Base
-    include VideoUploader::Attachment.new(:avatar)
+    include ImageUploader::Attachment.new(:avatar)
 
+    def upload_avatar(params, user_id)
 
+    end
+    
   end
 end
