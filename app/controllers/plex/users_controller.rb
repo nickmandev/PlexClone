@@ -31,13 +31,17 @@ module Plex
       end
     end
 
-    def update_avatar
-      image = Image.new
-      image.upload_avatar(params, UsersHelpers.current_user.id)
+    def update
+      user_model = User.new
+      if params['image_data'] || params['cover_data']
+        user_model.upload_image(params, UsersHelpers.current_user)
+      else
+        UsersHelpers.current_user.update(params)
+      end
     end
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :avatar)
+      params.require(:user).permit(:name, :email, :password, :image_data, :cover_data)
     end
 
     private :user_params

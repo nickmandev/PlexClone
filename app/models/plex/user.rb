@@ -12,11 +12,14 @@ module Plex
       regex.match?(email)
     end
 
-    def upload_avatar(params, user_id)
-      uploader = VideoUploader.new(:avatar)
-      avatar = uploader.upload(params[:file])
-      user = User.find_by_id(user_id)
-      user.update(image_data: avatar.to_json) 
+    def upload_image(params, user)
+      if params['cover_data']
+        uploader = ImageUploader.new(:cover)
+      else
+        uploader = ImageUploader.new(:image)  
+      end
+      image = uploader.upload(params)
+      user.update("#{params.keys().first}": image)
     end
 
     def authenticated?(params)

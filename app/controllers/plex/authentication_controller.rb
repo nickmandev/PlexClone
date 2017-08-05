@@ -6,7 +6,7 @@ module Plex
       command = AuthenticateUser.call(params[:user][:username], params[:user][:password])
 
       if command.success?
-        render json: { auth_token: command.result }
+        render json: { token: command.result, username: params[:user][:username] }
       else
         render json: { error: command.errors }
       end
